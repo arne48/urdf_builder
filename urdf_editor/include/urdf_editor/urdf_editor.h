@@ -10,9 +10,11 @@
 #include <qteditorfactory.h>
 #include <qteditorfactory.h>
 #include <qttreepropertybrowser.h>
-#include "urdf_editor/joint_property.h"
-#include "urdf_editor/link_property.h"
-#include "urdf_editor/urdf_property.h"
+#include <urdf_editor/joint_property.h>
+#include <urdf_editor/link_property.h>
+#include <urdf_editor/urdf_property.h>
+
+#include <iostream>
 
 
 //#include "my_rviz.h"
@@ -45,7 +47,7 @@ private:
   urdf_editor::URDFPropertyPtr urdf_tree_;
   rviz::VisualizationManager *rviz_manager_;
   rviz::RenderPanel *rviz_panel_;
-  //urdf_editor::MyRviz *rviz_;
+//  urdf_editor::MyRviz *rviz_;
 };
 
 #endif // URDF_EDITOR_H

@@ -4,8 +4,8 @@
 #include <boost/shared_ptr.hpp>
 #include <qttreepropertybrowser.h>
 #include <qtvariantproperty.h>
-#include "urdf_editor/common.h"
-#include "urdf_editor/joint_property.h"
+#include <urdf_editor/common.h>
+#include <urdf_editor/joint_property.h>
 #include <urdf_model/link.h>
 
 namespace urdf_editor
@@ -14,7 +14,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    LinkGeometryProperty(boost::shared_ptr<urdf::Geometry> geometry);
+    LinkGeometryProperty(urdf::GeometrySharedPtr geometry);
     ~LinkGeometryProperty();
 
     void loadFactoryForManager(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -27,7 +27,7 @@ namespace urdf_editor
     void linkGeometryValueChanged(QtProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::Geometry> geometry_;
+    urdf::GeometrySharedPtr geometry_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;
@@ -38,7 +38,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    LinkCollisionProperty(boost::shared_ptr<urdf::Collision> collision);
+    LinkCollisionProperty(urdf::CollisionSharedPtr collision);
     ~LinkCollisionProperty();
 
     void loadFactoryForManager(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -51,7 +51,7 @@ namespace urdf_editor
     void linkCollisionValueChanged(QtProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::Collision> collision_;
+    urdf::CollisionSharedPtr collision_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;
@@ -65,7 +65,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    LinkNewMaterialProperty(boost::shared_ptr<urdf::Material> material);
+    LinkNewMaterialProperty(urdf::MaterialSharedPtr material);
     ~LinkNewMaterialProperty();
 
     void loadFactoryForManager(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -78,7 +78,7 @@ namespace urdf_editor
     void linkNewMaterialValueChanged(QtProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::Material> material_;
+    urdf::MaterialSharedPtr material_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;
@@ -90,7 +90,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    LinkVisualProperty(boost::shared_ptr<urdf::Visual> visual);
+    LinkVisualProperty(urdf::VisualSharedPtr visual);
     ~LinkVisualProperty();
 
     void loadFactoryForManager(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -103,7 +103,7 @@ namespace urdf_editor
     void linkVisualValueChanged(QtProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::Visual> visual_;
+    urdf::VisualSharedPtr visual_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;
@@ -118,7 +118,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    LinkInertialProperty(boost::shared_ptr<urdf::Inertial> inertial);
+    LinkInertialProperty(urdf::InertialSharedPtr inertial);
     ~LinkInertialProperty();
 
     void loadFactoryForManager(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -131,7 +131,7 @@ namespace urdf_editor
     void linkInertialValueChanged(QtProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::Inertial> inertial_;
+    urdf::InertialSharedPtr inertial_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;
@@ -144,7 +144,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    LinkProperty(boost::shared_ptr<urdf::Link> link);
+    LinkProperty(urdf::LinkSharedPtr link);
     ~LinkProperty();
 
     void loadProperty(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -158,7 +158,7 @@ namespace urdf_editor
     void linkNameChanged(LinkProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::Link> link_;
+    urdf::LinkSharedPtr link_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;

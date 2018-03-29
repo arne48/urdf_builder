@@ -1,4 +1,4 @@
-#include "urdf_editor/urdf_property.h"
+#include <urdf_editor/urdf_property.h>
 #include <QVBoxLayout>
 
 namespace urdf_editor
@@ -60,13 +60,13 @@ namespace urdf_editor
 
   bool URDFProperty::buildTree()
   {
-    std::map<std::string, boost::shared_ptr<urdf::Link> >::iterator link_it;
+    std::map<std::string, urdf::LinkSharedPtr>::iterator link_it;
     for (link_it = model_->links_.begin(); link_it != model_->links_.end(); ++link_it)
     {
       addLinkProperty(link_it->second);
     }
 
-    std::map<std::string, boost::shared_ptr<urdf::Joint> >::iterator joint_it;
+    std::map<std::string, urdf::JointSharedPtr >::iterator joint_it;
     std::string name;
     for (joint_it = model_->joints_.begin(); joint_it != model_->joints_.end(); ++joint_it)
     {
@@ -88,14 +88,14 @@ namespace urdf_editor
   void URDFProperty::addLink()
   {
     QString name = getValidName("link_", link_names_);
-    boost::shared_ptr<urdf::Link> new_link(new urdf::Link());
+    urdf::LinkSharedPtr new_link(new urdf::Link());
     new_link->name = name.toStdString();
     model_->links_.insert(std::make_pair(name.toStdString(), new_link));
 
     addLinkProperty(new_link);
   }
 
-  void URDFProperty::addLinkProperty(boost::shared_ptr<urdf::Link> link)
+  void URDFProperty::addLinkProperty(urdf::LinkSharedPtr link)
   {
     QTreeWidgetItem *item = new QTreeWidgetItem(link_root_);
     item->setText(0, QString::fromStdString(link->name));
@@ -113,14 +113,14 @@ namespace urdf_editor
   void URDFProperty::addJoint(QTreeWidgetItem *parent)
   {
     QString name = getValidName("joint_", joint_names_);
-    boost::shared_ptr<urdf::Joint> new_joint(new urdf::Joint());
+    urdf::JointSharedPtr new_joint(new urdf::Joint());
     new_joint->name = name.toStdString();
     model_->joints_.insert(std::make_pair(name.toStdString(), new_joint));
 
     addJointProperty(parent, new_joint);
   }
 
-  void URDFProperty::addJointProperty(QTreeWidgetItem *parent, boost::shared_ptr<urdf::Joint> joint)
+  void URDFProperty::addJointProperty(QTreeWidgetItem *parent, urdf::JointSharedPtr joint)
   {
     QString name = QString::fromStdString(joint->name);
 

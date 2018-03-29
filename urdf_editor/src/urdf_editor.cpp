@@ -1,18 +1,19 @@
-#include "urdf_editor/urdf_editor.h"
-#include "ui_industrial_robot_builder.h"
-#include "rviz/visualization_manager.h"
-#include "rviz/render_panel.h"
+#include <urdf_editor/urdf_editor.h>
+#include <urdf_editor/ui_industrial_robot_builder.h>
+//#include <rviz/visualization_manager.h>
+//#include <rviz/render_panel.h>
 #include <sstream>
 
 URDFEditor::URDFEditor(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::URDFEditor)
 {
+  std::cout<<"Editor Const"<<std::endl;
   ui->setupUi(this);
-  rviz::RenderPanel *test;
-  test = new rviz::RenderPanel();
-  //rviz_ = new urdf_editor::MyRviz();
-  // Construct and lay out render panel.
+//  rviz::RenderPanel *test;
+//  test = new rviz::RenderPanel();
+//  rviz_ = new urdf_editor::MyRviz();
+//  Construct and lay out render panel.
 //  rviz_panel_ = new rviz::RenderPanel();
 //  QVBoxLayout* rviz_layout = new QVBoxLayout(ui->mainTabWidget->currentWidget());
 //  rviz_layout->setMargin(0);
@@ -29,8 +30,7 @@ URDFEditor::URDFEditor(QWidget *parent) :
 //  rviz_manager_->initialize();
 //  rviz_manager_->startUpdate();
 
-
-  QString file_path = "/home/larmstrong/catkin_abb_ws/src/abb/abb_irb2400_support/urdf/irb2400.urdf";
+  QString file_path = "/home/user/xiaomi_gen1.urdf";
 
   urdf_tree_.reset(new urdf_editor::URDFProperty(ui->robotTreeWidget, ui->propertyBrowserContainer));
   urdf_tree_->loadURDF(file_path);

@@ -4,7 +4,7 @@
 #include <boost/shared_container_iterator.hpp>
 #include <qttreepropertybrowser.h>
 #include <qtvariantproperty.h>
-#include "urdf_editor/common.h"
+#include <urdf_editor/common.h>
 #include <urdf_model/joint.h>
 
 namespace urdf_editor
@@ -63,7 +63,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    JointSafetyProperty(boost::shared_ptr<urdf::JointSafety> safety);
+    JointSafetyProperty(urdf::JointSafetySharedPtr safety);
     ~JointSafetyProperty();
 
     void loadFactoryForManager(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -76,7 +76,7 @@ namespace urdf_editor
     void jointSafetyValueChanged(QtProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::JointSafety> safety_;
+    urdf::JointSafetySharedPtr safety_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;
@@ -88,7 +88,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    JointMimicProperty(boost::shared_ptr<urdf::JointMimic> mimic, QStringList &joint_names);
+    JointMimicProperty(urdf::JointMimicSharedPtr mimic, QStringList &joint_names);
     ~JointMimicProperty();
 
     void loadFactoryForManager(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -101,7 +101,7 @@ namespace urdf_editor
     void jointMimicValueChanged(QtProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::JointMimic> mimic_;
+    urdf::JointMimicSharedPtr mimic_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;
@@ -114,7 +114,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    JointCalibrationProperty(boost::shared_ptr<urdf::JointCalibration> calibration);
+    JointCalibrationProperty(urdf::JointCalibrationSharedPtr calibration);
     ~JointCalibrationProperty();
 
     void loadFactoryForManager(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -127,7 +127,7 @@ namespace urdf_editor
     void jointCalibrationValueChanged(QtProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::JointCalibration> calibration_;
+    urdf::JointCalibrationSharedPtr calibration_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;
@@ -139,7 +139,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    JointDynamicsProperty(boost::shared_ptr<urdf::JointDynamics> dynamics);
+    JointDynamicsProperty(urdf::JointDynamicsSharedPtr dynamics);
     ~JointDynamicsProperty();
 
     void loadFactoryForManager(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -152,7 +152,7 @@ namespace urdf_editor
     void jointDynamicsValueChanged(QtProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::JointDynamics> dynamics_;
+    urdf::JointDynamicsSharedPtr dynamics_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;
@@ -164,7 +164,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    JointLimitsProperty(boost::shared_ptr<urdf::JointLimits> limits);
+    JointLimitsProperty(urdf::JointLimitsSharedPtr limits);
     ~JointLimitsProperty();
 
     void loadFactoryForManager(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -177,7 +177,7 @@ namespace urdf_editor
     void jointLimitsValueChanged(QtProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::JointLimits> limits_;
+    urdf::JointLimitsSharedPtr limits_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     QtProperty *top_item_;
@@ -190,7 +190,7 @@ namespace urdf_editor
   {
     Q_OBJECT
   public:
-    JointProperty(boost::shared_ptr<urdf::Joint> joint, QStringList &link_names, QStringList &joint_names);
+    JointProperty(urdf::JointSharedPtr joint, QStringList &link_names, QStringList &joint_names);
     ~JointProperty();
 
     void loadProperty(boost::shared_ptr<QtTreePropertyBrowser> property_editor);
@@ -204,19 +204,19 @@ namespace urdf_editor
     void jointNameChanged(JointProperty *property, const QVariant &val);
 
   private:
-    boost::shared_ptr<urdf::Joint> joint_;
+    urdf::JointSharedPtr joint_;
     QtVariantPropertyManager *manager_;
     QtVariantEditorFactory *factory_;
     bool loading_;
     QStringList &link_names_;
     QStringList &joint_names_;
-    boost::shared_ptr<JointLimitsProperty> limits_property_;
-    boost::shared_ptr<JointDynamicsProperty> dynamics_property_;
-    boost::shared_ptr<JointCalibrationProperty> calibration_property_;
-    boost::shared_ptr<JointMimicProperty> mimic_property_;
-    boost::shared_ptr<JointSafetyProperty> safety_property_;
-    boost::shared_ptr<JointAxisProperty> axis_property_;
-    boost::shared_ptr<OriginProperty> origin_property_;
+    boost::shared_ptr<urdf_editor::JointLimitsProperty> limits_property_;
+    boost::shared_ptr<urdf_editor::JointDynamicsProperty> dynamics_property_;
+    boost::shared_ptr<urdf_editor::JointCalibrationProperty> calibration_property_;
+    boost::shared_ptr<urdf_editor::JointMimicProperty> mimic_property_;
+    boost::shared_ptr<urdf_editor::JointSafetyProperty> safety_property_;
+    boost::shared_ptr<urdf_editor::JointAxisProperty> axis_property_;
+    boost::shared_ptr<urdf_editor::OriginProperty> origin_property_;
     QtVariantProperty *name_item_;
     QtVariantProperty *type_item_;
     QtVariantProperty *parent_item_;

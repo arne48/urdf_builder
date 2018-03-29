@@ -1,9 +1,9 @@
 #ifndef MYRVIZ_H
 #define MYRVIZ_H
 
-#include "rviz/visualization_manager.h"
-#include "rviz/render_panel.h"
-#include "rviz/display.h"
+#include <rviz/visualization_manager.h>
+#include <rviz/render_panel.h>
+#include <rviz/display.h>
 
 namespace urdf_editor
 {

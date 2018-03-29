@@ -5,8 +5,8 @@
 #include <QTreeWidgetItem>
 #include <QMenu>
 #include <urdf_parser/urdf_parser.h>
-#include "urdf_editor/joint_property.h"
-#include "urdf_editor/link_property.h"
+#include <urdf_editor/joint_property.h>
+#include <urdf_editor/link_property.h>
 #include <qttreepropertybrowser.h>
 
 namespace urdf_editor
@@ -35,10 +35,10 @@ namespace urdf_editor
     bool buildTree();
 
     void addLink();
-    void addLinkProperty(boost::shared_ptr<urdf::Link> link);
+    void addLinkProperty(urdf::LinkSharedPtr link);
 
     void addJoint(QTreeWidgetItem *parent);
-    void addJointProperty(QTreeWidgetItem *parent, boost::shared_ptr<urdf::Joint> joint);
+    void addJointProperty(QTreeWidgetItem *parent, urdf::JointSharedPtr joint);
 
     QString getValidName(QString prefix, QList<QString> &current_names);
     bool isJoint(QTreeWidgetItem *item);
@@ -46,8 +46,8 @@ namespace urdf_editor
     boost::shared_ptr<QtTreePropertyBrowser> property_editor_;
     boost::shared_ptr<QtVariantEditorFactory> variant_factory_; //This should be removed after link_property is updated like joint_propery
 
-    boost::shared_ptr<urdf::ModelInterface> model_;
-    QMap<boost::shared_ptr<urdf::Link>, QTreeWidgetItem *> joint_child_to_ctree_;
+    urdf::ModelInterfaceSharedPtr model_;
+    QMap<urdf::LinkSharedPtr, QTreeWidgetItem *> joint_child_to_ctree_;
     QMap<QTreeWidgetItem *, JointPropertyPtr> ctree_to_joint_property_;
     QMap<JointProperty *, QTreeWidgetItem *> joint_property_to_ctree_;
     QMap<QTreeWidgetItem *, LinkPropertyPtr> ltree_to_link_property_;

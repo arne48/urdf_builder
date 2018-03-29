@@ -1,4 +1,4 @@
-#include "urdf_editor/joint_property.h"
+#include <urdf_editor/joint_property.h>
 
 namespace urdf_editor
 {
@@ -192,7 +192,7 @@ namespace urdf_editor
   }
 
   //Joint Safety Property
-  JointSafetyProperty::JointSafetyProperty(boost::shared_ptr<urdf::JointSafety> safety): safety_(safety), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  JointSafetyProperty::JointSafetyProperty(urdf::JointSafetySharedPtr safety): safety_(safety), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -267,7 +267,7 @@ namespace urdf_editor
   }
 
   //Joint Mimic Property
-  JointMimicProperty::JointMimicProperty(boost::shared_ptr<urdf::JointMimic> mimic, QStringList &joint_names): mimic_(mimic), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory()), joint_names_(joint_names)
+  JointMimicProperty::JointMimicProperty(urdf::JointMimicSharedPtr mimic, QStringList &joint_names): mimic_(mimic), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory()), joint_names_(joint_names)
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -338,7 +338,7 @@ namespace urdf_editor
   }
 
   //Joint Calibration Property
-  JointCalibrationProperty::JointCalibrationProperty(boost::shared_ptr<urdf::JointCalibration> calibration): calibration_(calibration), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  JointCalibrationProperty::JointCalibrationProperty(urdf::JointCalibrationSharedPtr calibration): calibration_(calibration), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -401,7 +401,7 @@ namespace urdf_editor
   }
 
   //Joint Dynamics Property
-  JointDynamicsProperty::JointDynamicsProperty(boost::shared_ptr<urdf::JointDynamics> dynamics): dynamics_(dynamics), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  JointDynamicsProperty::JointDynamicsProperty(urdf::JointDynamicsSharedPtr dynamics): dynamics_(dynamics), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -464,7 +464,7 @@ namespace urdf_editor
   }
 
   //Joint Limits Property
-  JointLimitsProperty::JointLimitsProperty(boost::shared_ptr<urdf::JointLimits> limits): limits_(limits), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  JointLimitsProperty::JointLimitsProperty(urdf::JointLimitsSharedPtr limits): limits_(limits), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -544,7 +544,7 @@ namespace urdf_editor
   }
 
   // Joint Property
-  JointProperty::JointProperty(boost::shared_ptr<urdf::Joint> joint, QStringList &link_names, QStringList &joint_names): joint_(joint), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory()), link_names_(link_names), joint_names_(joint_names)
+  JointProperty::JointProperty(urdf::JointSharedPtr joint, QStringList &link_names, QStringList &joint_names): joint_(joint), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory()), link_names_(link_names), joint_names_(joint_names)
   {
     loading_ = true;
     double p_norm, r_norm;

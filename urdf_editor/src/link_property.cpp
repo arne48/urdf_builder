@@ -1,9 +1,9 @@
-#include "urdf_editor/link_property.h"
+#include <urdf_editor/link_property.h>
 
 namespace urdf_editor
 {
   // Link Geometry Property
-  LinkGeometryProperty::LinkGeometryProperty(boost::shared_ptr<urdf::Geometry> geometry): geometry_(geometry), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkGeometryProperty::LinkGeometryProperty(urdf::GeometrySharedPtr geometry): geometry_(geometry), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -19,7 +19,7 @@ namespace urdf_editor
 
     if (geometry_->type == urdf::Geometry::BOX)
     {
-      boost::shared_ptr<urdf::Box> box = boost::static_pointer_cast<urdf::Box>(geometry_);
+      urdf::BoxSharedPtr box = urdf::static_pointer_cast<urdf::Box>(geometry_);
       item = manager_->addProperty(QtVariantPropertyManager::groupTypeId(), tr("Size"));
       sub_item = manager_->addProperty(QVariant::Double, tr("Length X (m)"));
       item->addSubProperty(sub_item);
@@ -33,7 +33,7 @@ namespace urdf_editor
     }
     else if (geometry_->type == urdf::Geometry::CYLINDER)
     {
-      boost::shared_ptr<urdf::Cylinder> cylinder = boost::static_pointer_cast<urdf::Cylinder>(geometry_);
+      urdf::CylinderSharedPtr cylinder = urdf::static_pointer_cast<urdf::Cylinder>(geometry_);
       item = manager_->addProperty(QVariant::Double, tr("Radius (m)"));
       top_item_->addSubProperty(item);
 
@@ -42,13 +42,13 @@ namespace urdf_editor
     }
     else if (geometry_->type == urdf::Geometry::SPHERE)
     {
-      boost::shared_ptr<urdf::Sphere> sphere = boost::static_pointer_cast<urdf::Sphere>(geometry_);
+      urdf::SphereSharedPtr sphere = urdf::static_pointer_cast<urdf::Sphere>(geometry_);
       item = manager_->addProperty(QVariant::Double, tr("Radius (m)"));
       top_item_->addSubProperty(item);
     }
     else if (geometry_->type == urdf::Geometry::MESH)
     {
-      boost::shared_ptr<urdf::Mesh> mesh = boost::static_pointer_cast<urdf::Mesh>(geometry_);
+      urdf::MeshSharedPtr mesh = urdf::static_pointer_cast<urdf::Mesh>(geometry_);
       item = manager_->addProperty(QVariant::String, tr("File Name"));
       top_item_->addSubProperty(item);
 
@@ -87,7 +87,7 @@ namespace urdf_editor
       {
         if (geometry_->type == urdf::Geometry::BOX)
         {
-          boost::shared_ptr<urdf::Box> box = boost::static_pointer_cast<urdf::Box>(geometry_);
+          urdf::BoxSharedPtr box = urdf::static_pointer_cast<urdf::Box>(geometry_);
           if (name == "Length X (m)")
             item->setValue(box->dim.x);
           else if (name == "Length Y (m)")
@@ -97,7 +97,7 @@ namespace urdf_editor
         }
         else if (geometry_->type == urdf::Geometry::CYLINDER)
         {
-          boost::shared_ptr<urdf::Cylinder> cylinder = boost::static_pointer_cast<urdf::Cylinder>(geometry_);
+          urdf::CylinderSharedPtr cylinder = urdf::static_pointer_cast<urdf::Cylinder>(geometry_);
           if (name == "Radius (m)")
             item->setValue(cylinder->radius);
           else if (name == "Length (m)")
@@ -105,13 +105,13 @@ namespace urdf_editor
         }
         else if (geometry_->type == urdf::Geometry::SPHERE)
         {
-          boost::shared_ptr<urdf::Sphere> sphere = boost::static_pointer_cast<urdf::Sphere>(geometry_);
+          urdf::SphereSharedPtr sphere = urdf::static_pointer_cast<urdf::Sphere>(geometry_);
           if (name == "Radius (m)")
             item->setValue(sphere->radius);
         }
         else if (geometry_->type == urdf::Geometry::MESH)
         {
-          boost::shared_ptr<urdf::Mesh> mesh = boost::static_pointer_cast<urdf::Mesh>(geometry_);
+          urdf::MeshSharedPtr mesh = urdf::static_pointer_cast<urdf::Mesh>(geometry_);
           if (name == "File Name")
             item->setValue(QString::fromStdString(mesh->filename));
           else if (name == "X")
@@ -160,7 +160,7 @@ namespace urdf_editor
     {
       if (geometry_->type == urdf::Geometry::BOX)
       {
-        boost::shared_ptr<urdf::Box> box = boost::static_pointer_cast<urdf::Box>(geometry_);
+        urdf::BoxSharedPtr box = urdf::static_pointer_cast<urdf::Box>(geometry_);
         if (name == "Length X (m)")
           box->dim.x = val.toDouble();
         else if (name == "Length Y (m)")
@@ -170,7 +170,7 @@ namespace urdf_editor
       }
       else if (geometry_->type == urdf::Geometry::CYLINDER)
       {
-        boost::shared_ptr<urdf::Cylinder> cylinder = boost::static_pointer_cast<urdf::Cylinder>(geometry_);
+        urdf::CylinderSharedPtr cylinder = urdf::static_pointer_cast<urdf::Cylinder>(geometry_);
         if (name == "Radius (m)")
           cylinder->radius = val.toDouble();
         else if (name == "Length (m)")
@@ -178,13 +178,13 @@ namespace urdf_editor
       }
       else if (geometry_->type == urdf::Geometry::SPHERE)
       {
-        boost::shared_ptr<urdf::Sphere> sphere = boost::static_pointer_cast<urdf::Sphere>(geometry_);
+        urdf::SphereSharedPtr sphere = urdf::static_pointer_cast<urdf::Sphere>(geometry_);
         if (name == "Radius (m)")
           sphere->radius = val.toDouble();
       }
       else if (geometry_->type == urdf::Geometry::MESH)
       {
-        boost::shared_ptr<urdf::Mesh> mesh = boost::static_pointer_cast<urdf::Mesh>(geometry_);
+        urdf::MeshSharedPtr mesh = urdf::static_pointer_cast<urdf::Mesh>(geometry_);
         if (name == "File Name")
           mesh->filename = val.toString().toStdString();
         else if (name == "X")
@@ -198,7 +198,7 @@ namespace urdf_editor
   }
 
   // Link Collision Property
-  LinkCollisionProperty::LinkCollisionProperty(boost::shared_ptr<urdf::Collision> collision): collision_(collision), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkCollisionProperty::LinkCollisionProperty(urdf::CollisionSharedPtr collision): collision_(collision), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -210,7 +210,7 @@ namespace urdf_editor
 
     top_item_ = manager_->addProperty(QtVariantPropertyManager::groupTypeId(), tr("Collision"));
     item = manager_->addProperty(QVariant::String, tr("Name"));
-    item->setValue(QString::fromStdString(collision_->group_name));
+    item->setValue(QString::fromStdString(collision_->name));
     top_item_->addSubProperty(item);
 
     origin = collision_->origin;
@@ -253,7 +253,7 @@ namespace urdf_editor
       name = item->propertyName();
 
       if (name == "Name")
-        item->setValue(QString::fromStdString(collision_->group_name));
+        item->setValue(QString::fromStdString(collision_->name));
     }
 
     if (origin_property_)
@@ -283,12 +283,12 @@ namespace urdf_editor
 
     QString name = property->propertyName();
     if (name == "Name")
-      collision_->group_name = val.toString().toStdString();
+      collision_->name = val.toString().toStdString();
 
   }
 
   // Link Material Property
-  LinkNewMaterialProperty::LinkNewMaterialProperty(boost::shared_ptr<urdf::Material> material): material_(material), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkNewMaterialProperty::LinkNewMaterialProperty(urdf::MaterialSharedPtr material): material_(material), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -363,7 +363,7 @@ namespace urdf_editor
   }
 
   // Link Visual Property
-  LinkVisualProperty::LinkVisualProperty(boost::shared_ptr<urdf::Visual> visual): visual_(visual), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkVisualProperty::LinkVisualProperty(urdf::VisualSharedPtr visual): visual_(visual), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -425,7 +425,7 @@ namespace urdf_editor
       item = static_cast<QtVariantProperty *>(sub_items[i]);
       name = item->propertyName();
       if (name == "Name")
-        item->setValue(QString::fromStdString(visual_->group_name));
+        item->setValue(QString::fromStdString(visual_->name));
     }
 
     if (origin_property_)
@@ -461,12 +461,12 @@ namespace urdf_editor
 
     QString name = property->propertyName();
     if (name == "Name")
-      visual_->group_name = val.toString().toStdString();
+      visual_->name = val.toString().toStdString();
 
   }
 
   // Link Inertial Property
-  LinkInertialProperty::LinkInertialProperty(boost::shared_ptr<urdf::Inertial> inertial): inertial_(inertial), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkInertialProperty::LinkInertialProperty(urdf::InertialSharedPtr inertial): inertial_(inertial), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -581,7 +581,7 @@ namespace urdf_editor
   }
 
   // Link Property
-  LinkProperty::LinkProperty(boost::shared_ptr<urdf::Link> link):link_(link), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkProperty::LinkProperty(urdf::LinkSharedPtr link):link_(link), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QObject::connect(manager_, SIGNAL(valueChanged(QtProperty *, const QVariant &)),

@@ -1,4 +1,4 @@
-#include "my_rviz.h"
+#include <my_rviz.h>
 #include <QVBoxLayout>
 
 namespace urdf_editor
