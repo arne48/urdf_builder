@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.1)
 project(urdf_builder)
-find_package(catkin REQUIRED COMPONENTS roscpp qt_property_browser)
+find_package(catkin REQUIRED COMPONENTS rviz roscpp qt_property_browser)
 
+find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Gui REQUIRED)
 
 find_package(urdfdom REQUIRED)
 
@@ -17,6 +19,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -O0 -g")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
 
 set(editor_SRCS
+      src/my_rviz.cpp
       src/main.cpp
       src/urdf_editor.cpp
       src/common.cpp
@@ -30,6 +33,7 @@ set(editor_HDRS
       include/urdf_editor/joint_property.h
       include/urdf_editor/link_property.h
       include/urdf_editor/urdf_property.h
+      include/urdf_editor/my_rviz.h
 )
 
 set(editor_UIS
@@ -57,6 +61,8 @@ add_executable(urdf_builder
                   ${editor_UIS_H}
                   ${editor_MOCS}
                   ${editor_SRCS})
+
+qt5_use_modules(urdf_builder Core Widgets Gui)
 
 target_link_libraries(urdf_builder
                         ${catkin_LIBRARIES}

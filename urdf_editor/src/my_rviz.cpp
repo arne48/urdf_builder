@@ -1,14 +1,13 @@
-#include <my_rviz.h>
+#include <urdf_editor/my_rviz.h>
 #include <QVBoxLayout>
 
 namespace urdf_editor
 {
-
   MyRviz::MyRviz(QWidget *parent): QWidget(parent)
   {
     // Construct and layout render panel
     render_panel_ = new rviz::RenderPanel();
-    QVBoxLayout *vlayout = new QVBoxLayout;
+    auto *vlayout = new QVBoxLayout;
     vlayout->setMargin(0);
     vlayout->addWidget(render_panel_);
 

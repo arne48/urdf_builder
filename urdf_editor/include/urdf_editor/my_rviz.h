@@ -11,14 +11,14 @@ namespace urdf_editor
   class MyRviz: public QWidget
   {
     Q_OBJECT
-  public:
-    MyRviz(QWidget *parent = 0);
-    virtual ~MyRviz();
-
   private:
     rviz::VisualizationManager *manager_;
     rviz::RenderPanel *render_panel_;
     rviz::Display *display_;
+
+  public:
+    MyRviz(QWidget *parent = 0);
+    ~MyRviz();
   };
 
 }
