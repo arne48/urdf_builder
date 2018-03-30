@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(urdf_builder)
+project(urdf_editor)
 find_package(catkin REQUIRED COMPONENTS rviz roscpp qt_property_browser)
 
 find_package(Qt5Core REQUIRED)
@@ -57,17 +57,17 @@ qt5_wrap_ui(editor_UIS_H ${editor_UIS})
 
 include_directories(${editor_INCLUDE_DIRECTORIES} ${catkin_INCLUDE_DIRS} ${QT_INCLUDE_DIR} ${urdfdom_INCLUDE_DIR})
 
-add_executable(urdf_builder
+add_executable(urdf_editor
                   ${editor_UIS_H}
                   ${editor_MOCS}
                   ${editor_SRCS})
 
-qt5_use_modules(urdf_builder Core Widgets Gui)
+qt5_use_modules(urdf_editor Core Widgets Gui)
 
-target_link_libraries(urdf_builder
+target_link_libraries(urdf_editor
                         ${catkin_LIBRARIES}
                         ${urdfdom_LIBRARIES}
                         ${QT_LIBRARIES})
 
 ## Install
-#install(TARGETS urdf_builder DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+#install(TARGETS urdf_editor DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
