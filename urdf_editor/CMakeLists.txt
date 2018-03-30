@@ -1,12 +1,16 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.1)
 project(urdf_builder)
 find_package(catkin REQUIRED COMPONENTS roscpp qt_property_browser)
 
-find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
-include(${QT_USE_FILE})
-add_definitions(${QT_DEFINITIONS})
+find_package(Qt5Widgets REQUIRED)
 
 find_package(urdfdom REQUIRED)
+
+if(POLICY CMP0071)
+    cmake_policy(SET CMP0071 NEW)
+endif()
+
+set(CMAKE_AUTOMOC ON)
 
 set(DCMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -O0 -g")
@@ -38,19 +42,16 @@ set(editor_INCLUDE_DIRECTORIES
 )
 
 catkin_package(
-  INCLUDE_DIRS ${editor_INCLUDE_DIRECTORIES}
+  INCLUDE_DIRS #${editor_INCLUDE_DIRECTORIES}
   LIBRARIES
   CATKIN_DEPENDS roscpp qt_property_browser
   DEPENDS urdfdom
 )
 
-qt4_wrap_cpp(editor_MOCS ${editor_HDRS})
-qt4_wrap_ui(editor_UIS_H ${editor_UIS})
+qt5_wrap_cpp(editor_MOCS ${editor_HDRS})
+qt5_wrap_ui(editor_UIS_H ${editor_UIS})
 
 include_directories(${editor_INCLUDE_DIRECTORIES} ${catkin_INCLUDE_DIRS} ${QT_INCLUDE_DIR} ${urdfdom_INCLUDE_DIR})
-
-message(${QT_LIBRARIES})
-message(${catkin_LIBRARIES})
 
 add_executable(urdf_builder
                   ${editor_UIS_H}

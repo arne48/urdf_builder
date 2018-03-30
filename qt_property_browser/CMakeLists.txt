@@ -1,136 +1,68 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.1)
 project(qt_property_browser)
 
 find_package(catkin REQUIRED)
 
-find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
-include(${QT_USE_FILE})
+find_package(Qt5Widgets REQUIRED)
 
-set(qtpropertyeditor_SRCS
-      src/qtpropertybrowser.cpp
-      src/qtpropertymanager.cpp
-      src/qteditorfactory.cpp
-      src/qtvariantproperty.cpp
-      src/qttreepropertybrowser.cpp
-      src/qtbuttonpropertybrowser.cpp
-      src/qtgroupboxpropertybrowser.cpp
-      src/qtpropertybrowserutils.cpp
-)
+if(POLICY CMP0071)
+    cmake_policy(SET CMP0071 NEW)
+endif()
+
+# Tell CMake to run moc when necessary:
+set(CMAKE_AUTOMOC ON)
+
+# As moc files are generated in the binary dir, tell CMake
+# to always look for includes there:
+#set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(qtpropertyeditor_INCLUDE_DIRECTORIES
-      src
-      ${CMAKE_CURRENT_BINARY_DIR}
-      ${CMAKE_CURRENT_BINARY_DIR}/src
-      ${QT_INCLUDE_DIR}
-)
+      src)
 
-qt4_generate_moc(
-  src/qtpropertybrowser.h
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertybrowser.cpp
-)
-qt4_generate_moc(
-  src/qtpropertymanager.h
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertymanager.cpp
-)
-qt4_generate_moc(
-  src/qteditorfactory.h
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qteditorfactory.cpp
-)
-qt4_generate_moc(
-  src/qtvariantproperty.h
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtvariantproperty.cpp
-)
-qt4_generate_moc(
-  src/qttreepropertybrowser.h
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qttreepropertybrowser.cpp
-)
-qt4_generate_moc(
-  src/qtbuttonpropertybrowser.h
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtbuttonpropertybrowser.cpp
-)
-qt4_generate_moc(
-  src/qtgroupboxpropertybrowser.h
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtgroupboxpropertybrowser.cpp
-)
-qt4_generate_moc(
-  src/qtpropertymanager.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/qtpropertymanager.moc
-)
-qt4_generate_moc(
-  src/qteditorfactory.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/qteditorfactory.moc
-)
-qt4_generate_moc(
-  src/qttreepropertybrowser.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/qttreepropertybrowser.moc
-)
+set(_SRCS
+        src/qtbuttonpropertybrowser.cpp
+        src/qteditorfactory.cpp
+        src/qtgroupboxpropertybrowser.cpp
+        src/qtpropertybrowser.cpp
+        src/qtpropertybrowserutils.cpp
+        src/qtpropertymanager.cpp
+        src/qttreepropertybrowser.cpp
+        src/qtvariantproperty.cpp
+        )
 
-set(
-  qtpropertyeditor_HEADERS_ONLY_MOC
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertybrowser.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertymanager.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qteditorfactory.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtvariantproperty.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qttreepropertybrowser.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtbuttonpropertybrowser.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtgroupboxpropertybrowser.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/qtpropertymanager.moc
-  ${CMAKE_CURRENT_BINARY_DIR}/qteditorfactory.moc
-  ${CMAKE_CURRENT_BINARY_DIR}/qttreepropertybrowser.moc
-)
+file(GLOB _IMPL_HDRS *.h)
+file(GLOB _PUBLIC_HDRS Qt*)
 
-set_source_files_properties(
-  ${qtpropertyeditor_HEADERS_ONLY_MOC}
-  PROPERTIES
-    HEADER_FILE_ONLY true
-)
+set(_UI_FORMS
+        )
 
-qt4_generate_moc(
-  src/qtpropertybrowserutils_p.h
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertybrowserutils_p.cpp
-)
+set(_RESOURCES
+        src/qtpropertybrowser.qrc
+        )
 
-set(
-  qtpropertyeditor_HEADERS_MOC
-  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertybrowserutils_p.cpp
-)
+QT5_WRAP_UI(_UI_SRCS ${_UI_FORMS})
+QT5_ADD_RESOURCES(_QRC_SRCS ${_RESOURCES})
 
-set(
-  qtpropertyeditor_MOC
-  ${qtpropertyeditor_HEADERS_MOC}
-  ${qtpropertyeditor_HEADERS_ONLY_MOC}
-)
-
-qt4_add_resources(
-  qtpropertyeditor_RESOURCES
-  src/qtpropertybrowser.qrc
-)
+set(TARGET_NAME ${PROJECT_NAME})
 
 catkin_package(
-  INCLUDE_DIRS ${qtpropertyeditor_INCLUDE_DIRECTORIES}
-  LIBRARIES qt_property_browser
-  CATKIN_DEPENDS 
-  DEPENDS Qt4
+        INCLUDE_DIRS ${qtpropertyeditor_INCLUDE_DIRECTORIES}
+        LIBRARIES qt_property_browser
+        CATKIN_DEPENDS
+        DEPENDS
 )
 
+add_library(${TARGET_NAME}
+        ${_SRCS}
+        ${_UI_SRCS}
+        ${_QRC_SRCS}
+        ${_IMPL_HDRS}
+        )
 
-include_directories(${qtpropertyeditor_INCLUDE_DIRECTORIES})
+target_link_libraries(${TARGET_NAME} Qt5::Widgets)
 
-add_library(qt_property_browser
-                  ${qtpropertyeditor_MOC}
-                  ${qtpropertyeditor_SRCS}
-                  ${qtpropertyeditor_RESOURCES})
+######################### Installation Stuff ###########################
+include(GenerateExportHeader)
+generate_export_header(${TARGET_NAME})
 
-target_link_libraries(qt_property_browser
-                        ${QT_LIBRARIES}
-                        ${QT_QTCORE_LIBRARY}
-                        ${QT_QTGUI_LIBRARY})
-
-ADD_DEFINITIONS(${QT_DEFINITIONS})
-#ADD_DEFINITIONS(-DQT_DLL)
-#ADD_DEFINITIONS(-DQT_QTPROPERTYBROWSER_EXPORT)
-#ADD_DEFINITIONS(-DQT_PLUGIN)
-#ADD_DEFINITIONS(-DQT_SHARED)
-
-## Install
 install(TARGETS qt_property_browser DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

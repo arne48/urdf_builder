@@ -1,10 +1,10 @@
 #ifndef URDF_EDITOR_H
 #define URDF_EDITOR_H
 
-#include <QMainWindow>
-#include <QtCore>
-#include <QtGui>
-#include <QObject>
+//#include <QMainWindow>
+//#include <QtCore>
+#include <QtWidgets>
+//#include <QObject>
 #include <qtvariantproperty.h>
 #include <qtpropertymanager.h>
 #include <qteditorfactory.h>

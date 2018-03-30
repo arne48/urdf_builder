@@ -1,6 +1,6 @@
 #ifndef JOINT_PROPERTY
 #define JOINT_PROPERTY
-#include <QtCore>
+//#include <QtCore>
 #include <boost/shared_container_iterator.hpp>
 #include <qttreepropertybrowser.h>
 #include <qtvariantproperty.h>

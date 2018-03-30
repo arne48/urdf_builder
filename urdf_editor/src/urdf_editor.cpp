@@ -1,5 +1,5 @@
 #include <urdf_editor/urdf_editor.h>
-#include <urdf_editor/ui_industrial_robot_builder.h>
+#include "ui_industrial_robot_builder.h"
 //#include <rviz/visualization_manager.h>
 //#include <rviz/render_panel.h>
 #include <sstream>
@@ -8,7 +8,6 @@ URDFEditor::URDFEditor(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::URDFEditor)
 {
-  std::cout<<"Editor Const"<<std::endl;
   ui->setupUi(this);
 //  rviz::RenderPanel *test;
 //  test = new rviz::RenderPanel();
