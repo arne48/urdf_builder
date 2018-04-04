@@ -3,7 +3,8 @@
 namespace urdf_editor
 {
   //Origin Property
-  OriginProperty::OriginProperty(urdf::Pose &origin): origin_(origin), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  OriginProperty::OriginProperty(urdf::Pose &origin): origin_(origin), manager_(new QtVariantPropertyManager()),
+                                                      factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -58,9 +59,8 @@ namespace urdf_editor
     QList<QtProperty *> sub_items;
 
     sub_items = top_item_->subProperties()[0]->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
       if (name == "X")
         item->setValue(origin_.position.x);
@@ -71,9 +71,8 @@ namespace urdf_editor
     }
 
     sub_items = top_item_->subProperties()[1]->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
 
       origin_.rotation.getRPY(r, p, y);
@@ -124,7 +123,8 @@ namespace urdf_editor
   }
 
   //Joint Axis Property
-  JointAxisProperty::JointAxisProperty(urdf::Vector3 &axis): axis_(axis), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  JointAxisProperty::JointAxisProperty(urdf::Vector3 &axis): axis_(axis), manager_(new QtVariantPropertyManager()),
+                                                             factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -158,9 +158,9 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
       if (name == "X")
         item->setValue(axis_.x);
@@ -192,7 +192,9 @@ namespace urdf_editor
   }
 
   //Joint Safety Property
-  JointSafetyProperty::JointSafetyProperty(urdf::JointSafetySharedPtr safety): safety_(safety), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  JointSafetyProperty::JointSafetyProperty(urdf::JointSafetySharedPtr safety): safety_(safety),
+                                                                               manager_(new QtVariantPropertyManager()),
+                                                                               factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -229,9 +231,9 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
       if (name == "Soft Lower Limit")
         item->setValue(safety_->soft_lower_limit);
@@ -267,7 +269,10 @@ namespace urdf_editor
   }
 
   //Joint Mimic Property
-  JointMimicProperty::JointMimicProperty(urdf::JointMimicSharedPtr mimic, QStringList &joint_names): mimic_(mimic), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory()), joint_names_(joint_names)
+  JointMimicProperty::JointMimicProperty(urdf::JointMimicSharedPtr mimic, QStringList &joint_names): mimic_(mimic),
+                                                                                                     manager_(new QtVariantPropertyManager()),
+                                                                                                     factory_(new QtVariantEditorFactory()),
+                                                                                                     joint_names_(joint_names)
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -301,9 +306,9 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
       if (name == "Joint")
       {
@@ -338,7 +343,9 @@ namespace urdf_editor
   }
 
   //Joint Calibration Property
-  JointCalibrationProperty::JointCalibrationProperty(urdf::JointCalibrationSharedPtr calibration): calibration_(calibration), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  JointCalibrationProperty::JointCalibrationProperty(urdf::JointCalibrationSharedPtr calibration): calibration_(calibration),
+                                                                                                   manager_(new QtVariantPropertyManager()),
+                                                                                                   factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -371,9 +378,9 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
       if (name == "Rising")
         item->setValue(*calibration_->rising);
@@ -401,7 +408,9 @@ namespace urdf_editor
   }
 
   //Joint Dynamics Property
-  JointDynamicsProperty::JointDynamicsProperty(urdf::JointDynamicsSharedPtr dynamics): dynamics_(dynamics), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  JointDynamicsProperty::JointDynamicsProperty(urdf::JointDynamicsSharedPtr dynamics): dynamics_(dynamics),
+                                                                                       manager_(new QtVariantPropertyManager()),
+                                                                                       factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -434,9 +443,9 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
       if (name == "Damping")
         item->setValue(dynamics_->damping);
@@ -464,7 +473,9 @@ namespace urdf_editor
   }
 
   //Joint Limits Property
-  JointLimitsProperty::JointLimitsProperty(urdf::JointLimitsSharedPtr limits): limits_(limits), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  JointLimitsProperty::JointLimitsProperty(urdf::JointLimitsSharedPtr limits): limits_(limits),
+                                                                               manager_(new QtVariantPropertyManager()),
+                                                                               factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -506,9 +517,9 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
       if (name == "Lower")
         item->setValue(limits_->lower);
@@ -544,7 +555,10 @@ namespace urdf_editor
   }
 
   // Joint Property
-  JointProperty::JointProperty(urdf::JointSharedPtr joint, QStringList &link_names, QStringList &joint_names): joint_(joint), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory()), link_names_(link_names), joint_names_(joint_names)
+  JointProperty::JointProperty(urdf::JointSharedPtr joint, QStringList &link_names,
+                               QStringList &joint_names): joint_(joint),manager_(new QtVariantPropertyManager()),
+                                                          factory_(new QtVariantEditorFactory()), link_names_(link_names),
+                                                          joint_names_(joint_names)
   {
     loading_ = true;
     double p_norm, r_norm;

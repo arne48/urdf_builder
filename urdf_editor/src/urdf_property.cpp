@@ -17,7 +17,7 @@ namespace urdf_editor
     root_->addChild(link_root_);
 
     joint_root_ = new QTreeWidgetItem();
-    joint_root_->setText(0,"Chain");
+    joint_root_->setText(0,"Joints");
     root_->addChild(joint_root_);
 
     variant_factory_.reset(new QtVariantEditorFactory());
@@ -28,7 +28,7 @@ namespace urdf_editor
     property_editor_->setRootIsDecorated(true);
     property_editor_->setResizeMode(QtTreePropertyBrowser::ResizeToContents);
 
-    QVBoxLayout *vlayout = new QVBoxLayout(browser_parent_.get());
+    auto *vlayout = new QVBoxLayout(browser_parent_.get());
     vlayout->setMargin(0);
     vlayout->addWidget(property_editor_.get());
 
@@ -40,6 +40,8 @@ namespace urdf_editor
 
     connect(property_editor_.get(), SIGNAL(customContextMenuRequested(QPoint)),
               this, SLOT(on_propertyWidget_customContextMenuRequested(QPoint)));
+
+    root_->setExpanded(true);
   }
 
   URDFProperty::~URDFProperty()
@@ -57,6 +59,10 @@ namespace urdf_editor
 
   bool URDFProperty::buildTree()
   {
+    std::string tree_root_text = "Robot Model (" + model_->name_ + ")";
+    root_->setText(0, QString::fromStdString(tree_root_text));
+
+    std::cout<<model_->root_link_->name<<std::endl;
     std::map<std::string, urdf::LinkSharedPtr>::iterator link_it;
     for (link_it = model_->links_.begin(); link_it != model_->links_.end(); ++link_it)
     {
@@ -94,7 +100,7 @@ namespace urdf_editor
 
   void URDFProperty::addLinkProperty(urdf::LinkSharedPtr link)
   {
-    QTreeWidgetItem *item = new QTreeWidgetItem(link_root_);
+    auto *item = new QTreeWidgetItem(link_root_);
     item->setText(0, QString::fromStdString(link->name));
     root_->addChild(item);
 
@@ -121,7 +127,7 @@ namespace urdf_editor
   {
     QString name = QString::fromStdString(joint->name);
 
-    QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+    auto *item = new QTreeWidgetItem(parent);
     item->setText(0, name);
     root_->addChild(item);
 
@@ -171,7 +177,7 @@ namespace urdf_editor
 
       QTreeWidgetItem *sel = tree_widget_->selectedItems()[0];
 
-      QMenu *menu = new QMenu(tree_widget_.get());
+      auto *menu = new QMenu(tree_widget_.get());
       menu->addAction("Add");
       menu->addAction("Remove");
       QAction *selected_item = menu->exec(tree_widget_->mapToGlobal(pos));

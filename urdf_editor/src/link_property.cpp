@@ -3,7 +3,9 @@
 namespace urdf_editor
 {
   // Link Geometry Property
-  LinkGeometryProperty::LinkGeometryProperty(urdf::GeometrySharedPtr geometry): geometry_(geometry), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkGeometryProperty::LinkGeometryProperty(urdf::GeometrySharedPtr geometry): geometry_(geometry),
+                                                                                manager_(new QtVariantPropertyManager()),
+                                                                                factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -76,9 +78,9 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
 
       if (name == "Type")
@@ -198,7 +200,9 @@ namespace urdf_editor
   }
 
   // Link Collision Property
-  LinkCollisionProperty::LinkCollisionProperty(urdf::CollisionSharedPtr collision): collision_(collision), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkCollisionProperty::LinkCollisionProperty(urdf::CollisionSharedPtr collision): collision_(collision),
+                                                                                    manager_(new QtVariantPropertyManager()),
+                                                                                    factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -247,9 +251,9 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
 
       if (name == "Name")
@@ -288,7 +292,9 @@ namespace urdf_editor
   }
 
   // Link Material Property
-  LinkNewMaterialProperty::LinkNewMaterialProperty(urdf::MaterialSharedPtr material): material_(material), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkNewMaterialProperty::LinkNewMaterialProperty(urdf::MaterialSharedPtr material): material_(material),
+                                                                                      manager_(new QtVariantPropertyManager()),
+                                                                                      factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -322,17 +328,24 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
 
       if (name == "Name")
+      {
         item->setValue(QString::fromStdString(material_->name));
-      else if (name == "Color")
-        item->setValue(QColor::fromRgba(qRgba(material_->color.r * 255.0, material_->color.g * 255.0, material_->color.b * 255.0, material_->color.a * 255.0)));
-      else if (name == "Texture")
+      }
+      else if (name == "Color") {
+        item->setValue(QColor::fromRgba(qRgba(material_->color.r * 255.0,
+                                              material_->color.g * 255.0,
+                                              material_->color.b * 255.0,
+                                              material_->color.a * 255.0)));
+      }
+      else if (name == "Texture") {
         item->setValue(QString::fromStdString(material_->texture_filename));
+      }
     }
     loading_ = false;
   }
@@ -363,7 +376,9 @@ namespace urdf_editor
   }
 
   // Link Visual Property
-  LinkVisualProperty::LinkVisualProperty(urdf::VisualSharedPtr visual): visual_(visual), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkVisualProperty::LinkVisualProperty(urdf::VisualSharedPtr visual): visual_(visual),
+                                                                        manager_(new QtVariantPropertyManager()),
+                                                                        factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -420,9 +435,9 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
       if (name == "Name")
         item->setValue(QString::fromStdString(visual_->name));
@@ -466,7 +481,9 @@ namespace urdf_editor
   }
 
   // Link Inertial Property
-  LinkInertialProperty::LinkInertialProperty(urdf::InertialSharedPtr inertial): inertial_(inertial), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkInertialProperty::LinkInertialProperty(urdf::InertialSharedPtr inertial): inertial_(inertial),
+                                                                                manager_(new QtVariantPropertyManager()),
+                                                                                factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QtVariantProperty *item;
@@ -525,9 +542,9 @@ namespace urdf_editor
     QtVariantProperty *item;
     QString name;
     QList<QtProperty *> sub_items = top_item_->subProperties();
-    for (int i = 0; i < sub_items.length(); ++i)
-    {
-      item = static_cast<QtVariantProperty *>(sub_items[i]);
+
+    for (auto &sub_item : sub_items) {
+      item = dynamic_cast<QtVariantProperty *>(sub_item);
       name = item->propertyName();
       if (name == "Mass (kg)")
         item->setValue(inertial_->mass);
@@ -581,7 +598,8 @@ namespace urdf_editor
   }
 
   // Link Property
-  LinkProperty::LinkProperty(urdf::LinkSharedPtr link):link_(link), manager_(new QtVariantPropertyManager()), factory_(new QtVariantEditorFactory())
+  LinkProperty::LinkProperty(urdf::LinkSharedPtr link):link_(link), manager_(new QtVariantPropertyManager()),
+                                                       factory_(new QtVariantEditorFactory())
   {
     loading_ = true;
     QObject::connect(manager_, SIGNAL(valueChanged(QtProperty *, const QVariant &)),
