@@ -19,7 +19,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -O0 -g")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
 
 set(editor_SRCS
-      src/my_rviz.cpp
+#     src/my_rviz.cpp
       src/main.cpp
       src/urdf_editor.cpp
       src/common.cpp
@@ -33,7 +33,7 @@ set(editor_HDRS
       include/urdf_editor/joint_property.h
       include/urdf_editor/link_property.h
       include/urdf_editor/urdf_property.h
-      include/urdf_editor/my_rviz.h
+#     include/urdf_editor/my_rviz.h
 )
 
 set(editor_UIS

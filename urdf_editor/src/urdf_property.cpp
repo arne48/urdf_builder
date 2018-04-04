@@ -46,14 +46,11 @@ namespace urdf_editor
   {
   }
 
-  bool URDFProperty::loadURDF(QString file_path)
+  bool URDFProperty::loadURDF(std::string model)
   {
-    model_ = urdf::parseURDFFile(file_path.toStdString());
+    model_ = urdf::parseURDF(model);
     if (model_)
-      if (buildTree())
-        return true;
-      else
-        return false;
+      return buildTree();
     else
       return false;
   }

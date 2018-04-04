@@ -13,7 +13,11 @@
 #include <urdf_editor/joint_property.h>
 #include <urdf_editor/link_property.h>
 #include <urdf_editor/urdf_property.h>
-#include <urdf_editor/my_rviz.h>
+//#include <urdf_editor/my_rviz.h>
+
+#include <rviz/visualization_manager.h>
+#include <rviz/render_panel.h>
+#include <rviz/display.h>
 
 #include <iostream>
 
@@ -45,7 +49,7 @@ private:
   urdf_editor::URDFPropertyPtr urdf_tree_;
   rviz::VisualizationManager *rviz_manager_;
   rviz::RenderPanel *rviz_panel_;
-  urdf_editor::MyRviz *rviz_;
+//  urdf_editor::MyRviz *rviz_;
 };
 
 #endif // URDF_EDITOR_H

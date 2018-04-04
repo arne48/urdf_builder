@@ -18,7 +18,7 @@ namespace urdf_editor
     URDFProperty(QTreeWidget *tree_widget, QWidget *browser_parent);
     ~URDFProperty();
 
-    bool loadURDF(QString file_path);
+    bool loadURDF(std::string model);
 
   private slots:
     void on_treeWidget_customContextMenuRequested(const QPoint &pos);
