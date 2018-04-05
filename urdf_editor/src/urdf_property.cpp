@@ -62,7 +62,6 @@ namespace urdf_editor
     std::string tree_root_text = "Robot Model (" + model_->name_ + ")";
     root_->setText(0, QString::fromStdString(tree_root_text));
 
-    std::cout<<model_->root_link_->name<<std::endl;
     std::map<std::string, urdf::LinkSharedPtr>::iterator link_it;
     for (link_it = model_->links_.begin(); link_it != model_->links_.end(); ++link_it)
     {

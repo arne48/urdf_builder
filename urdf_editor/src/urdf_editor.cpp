@@ -23,11 +23,16 @@ URDFEditor::URDFEditor(QWidget *parent) :
   rviz_manager_->startUpdate();
 
   rviz_manager_->setFixedFrame("base_link");
-  rviz::Display *robot_model_display;
-  robot_model_display = rviz_manager_->createDisplay("rviz/RobotModel", "Robot Model", true);
-  robot_model_display->setEnabled(true);
 
+  //Original loads from "robot_description"
+  rviz::Display *original_robot_model_display = rviz_manager_->createDisplay("rviz/RobotModel", "Original Robot Model", true);
+  original_robot_model_display->setEnabled(true);
 
+  //Modified loads from "urdf_editor/modified_robot_description"
+  rviz::Display *modified_robot_model_display = rviz_manager_->createDisplay("rviz/RobotModel", "Modified Robot Model", true);
+  modified_robot_model_display->setEnabled(true);
+
+  //Once a parameter is changed the urdf is regenerated and "urdf_editor/modified_robot_description" is updated
   urdf_tree_.reset(new urdf_editor::URDFProperty(ui->robotTreeWidget, ui->propertyBrowserContainer));
 
   //Load from parameter server
